@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="es-CO">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Edison &amp; Milena · Nuestra boda</title>
+<meta name="description" content="Te invitamos a celebrar nuestro matrimonio. Abre la invitación y confirma tu asistencia.">
+<meta name="theme-color" content="#F1ECF6">
+<meta name="color-scheme" content="light">
+<meta name="format-detection" content="telephone=no">
+
+<!-- Vista previa al compartir (WhatsApp, Facebook, Telegram, X…) -->
+<meta property="og:type" content="website">
+<meta property="og:locale" content="es_CO">
+<meta property="og:site_name" content="Edison &amp; Milena">
+<meta property="og:title" content="Edison &amp; Milena · Nuestra boda">
+<meta property="og:description" content="Sábado 12 de diciembre de 2026 · Sogamoso, Boyacá. Te invitamos a celebrar nuestro matrimonio. Abre la invitación y confirma tu asistencia.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Edison &amp; Milena · Nuestra boda">
+<meta name="twitter:description" content="Sábado 12 de diciembre de 2026 · Sogamoso, Boyacá. Te invitamos a celebrar nuestro matrimonio. Abre la invitación y confirma tu asistencia.">
+<meta name="twitter:image:alt" content="Edison y Milena abrazados junto al lago. Nos casamos el 12 de diciembre de 2026.">
+<!-- Cambia TU-USUARIO por tu usuario de GitHub -->
+<meta property="og:url" content="https://TU-USUARIO.github.io/edison-y-milena/">
+<meta property="og:image" content="https://TU-USUARIO.github.io/edison-y-milena/vista-previa.jpg">
+<meta name="twitter:image" content="https://TU-USUARIO.github.io/edison-y-milena/vista-previa.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Edison y Milena abrazados junto al lago. Nos casamos el 12 de diciembre de 2026.">
+
+<link rel="icon" href="icono.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png" sizes="180x180">
+
+<link rel="preconnect" href="https://script.google.com">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Solo las letras que usa esta pantalla (text=…): la fuente pesa unos pocos KB -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Corinthia&amp;family=EB+Garamond:ital,wght@0,500;1,400&amp;display=block&amp;text=ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz%C3%A1%C3%A9%C3%AD%C3%B3%C3%BA%C3%BC%C3%B1%C3%81%C3%89%C3%8D%C3%93%C3%9A%C3%9C%C3%910123456789%20%26.%2C%3A%3B%E2%80%A6%C2%B7%C2%BF%3F%C2%A1%21%27%E2%80%99%28%29-%E2%80%93">
+
+<style>
+  :root {
+    --papel: #FBFAFC;
+    --niebla: #F1ECF6;
+    --lila: #B7A0D3;
+    --lila-hondo: #6A5192;
+    --oliva: #7A8445;
+    --oliva-hondo: #46502A;
+    --tinta-suave: #5B604F;
+    --script: 'Corinthia', 'Brush Script MT', cursive;
+    --serif: 'EB Garamond', Garamond, Georgia, serif;
+    --sup: env(safe-area-inset-top, 0px);
+    --der: env(safe-area-inset-right, 0px);
+    --inf: env(safe-area-inset-bottom, 0px);
+    --izq: env(safe-area-inset-left, 0px);
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body {
+    margin: 0; height: 100%; overflow: hidden;
+    background: var(--niebla);
+    overscroll-behavior: none;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  /* ---------- La invitación (Apps Script) a pantalla completa ---------- */
+  .app {
+    position: fixed; z-index: 1;
+    top: var(--sup); left: var(--izq);
+    width: calc(100% - var(--izq) - var(--der));
+    height: calc(100vh - var(--sup) - var(--inf));
+    height: calc(100dvh - var(--sup) - var(--inf));
+    display: block; margin: 0; padding: 0; border: 0;
+    background: transparent;
+  }
+
+  /* ---------- Pantalla de carga ---------- */
+  .carga {
+    position: fixed; inset: 0; z-index: 2;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: max(20px, var(--sup)) max(16px, var(--der)) max(20px, var(--inf)) max(16px, var(--izq));
+    overflow: hidden;
+    color: var(--tinta-suave);
+    font-family: var(--serif);
+    text-align: center;
+    background-color: var(--niebla);
+    background-image:
+      radial-gradient(70% 46% at 50% 47%, rgba(255,255,255,.92) 0%, rgba(255,255,255,.55) 45%, rgba(255,255,255,0) 100%),
+      radial-gradient(130% 95% at 50% 50%, rgba(241,236,246,0) 55%, rgba(183,160,211,.30) 100%);
+    transition: opacity .8s ease, visibility 0s linear .8s;
+    -webkit-tap-highlight-color: transparent;
+  }
+  /* grano de papel */
+  .carga::before {
+    content: ''; position: absolute; inset: 0; pointer-events: none; opacity: .5;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .30 0 0 0 0 .26 0 0 0 0 .36 0 0 0 .5 -.19'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+  }
+  .lista .carga { opacity: 0; visibility: hidden; pointer-events: none; }
+  .carga[hidden] { display: none; }
+
+  .centro {
+    position: relative;
+    display: flex; flex-direction: column; align-items: center;
+    gap: clamp(14px, 3.6vh, 30px);
+    animation: aparecer .9s cubic-bezier(.2,.7,.2,1) backwards;
+    transition: transform .8s cubic-bezier(.2,.7,.2,1);
+  }
+  .nombres {
+    margin: 0; white-space: nowrap;
+    font: 400 clamp(2.6rem, min(14vw, 10.5vh), 5.2rem)/1.05 var(--script);
+    color: var(--oliva-hondo);
+    text-shadow: 0 1px 0 rgba(255,255,255,.7);
+  }
+  .nombres .y { color: var(--lila-hondo); font-size: .8em; padding: 0 .06em; }
+
+  .sello {
+    position: relative;
+    width: clamp(96px, min(34vw, 22vh), 150px);
+    filter: drop-shadow(0 8px 12px rgba(60,48,84,.28)) drop-shadow(0 2px 3px rgba(60,48,84,.18));
+    animation: latido 2.6s ease-in-out .9s infinite;
+  }
+  .sello-svg { display: block; width: 100%; height: auto; overflow: visible; }
+  .halo {
+    position: absolute; inset: 13%; border-radius: 50%;
+    border: 1.5px solid rgba(255,255,255,.9);
+    box-shadow: 0 0 0 1px rgba(122,132,69,.18), 0 0 14px 1px rgba(183,160,211,.55);
+    opacity: 0; pointer-events: none;
+    animation: halo 2.6s ease-out .9s infinite;
+  }
+  .brillo { position: absolute; inset: 15.5%; border-radius: 50%; overflow: hidden; pointer-events: none; }
+  .brillo::before {
+    content: ''; position: absolute; top: -20%; bottom: -20%; left: -10%; width: 120%;
+    background: linear-gradient(105deg, rgba(255,255,255,0) 32%, rgba(255,255,255,.3) 47%, rgba(255,255,255,.45) 50%, rgba(255,255,255,0) 64%);
+    transform: translateX(-140%);
+    animation: destello 4.2s cubic-bezier(.45,0,.25,1) 1.4s infinite;
+  }
+
+  .estado {
+    margin: 0;
+    display: flex; align-items: center; justify-content: center; gap: .7em;
+    font: italic 400 clamp(1.05rem, 4.6vw, 1.3rem)/1.3 var(--serif);
+    letter-spacing: .015em;
+    min-height: 1.3em;
+    animation: respirar 2.8s ease-in-out infinite;
+  }
+  .estado::before, .estado::after {
+    content: ''; width: clamp(16px, 6vw, 34px); height: 1px; flex: none;
+    background: linear-gradient(90deg, rgba(122,132,69,0), rgba(122,132,69,.7));
+  }
+  .estado::after { transform: scaleX(-1); }
+
+  /* ---------- Respaldo: botón "Abrir la invitación" ---------- */
+  .respaldo {
+    position: absolute; left: 50%; bottom: max(22px, calc(var(--inf) + 14px));
+    width: min(92vw, 380px);
+    display: flex; flex-direction: column; align-items: center; gap: 10px;
+    padding: 0;
+    opacity: 0; visibility: hidden;
+    transform: translate(-50%, 12px);
+    transition: opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1), visibility 0s linear .7s,
+                background-color .6s ease, box-shadow .6s ease, padding .6s ease, bottom .6s ease;
+  }
+  .respaldo-texto { margin: 0; font: italic 400 1rem/1.35 var(--serif); color: var(--tinta-suave); }
+  .boton {
+    display: inline-flex; align-items: center; justify-content: center; gap: .55em;
+    min-height: 44px; padding: .55em 1.35em;
+    border-radius: 999px;
+    border: 1px solid rgba(70,80,42,.55);
+    background: rgba(255,255,255,.55);
+    color: var(--oliva-hondo);
+    font: 500 .98rem/1.2 var(--serif);
+    letter-spacing: .08em; text-transform: uppercase;
+    white-space: nowrap;
+    text-decoration: none;
+    transition: background-color .3s ease, color .3s ease, box-shadow .3s ease, transform .2s ease;
+  }
+  .boton:hover { background: #fff; }
+  .boton:active { transform: scale(.97); }
+  .boton:focus-visible { outline: 2px solid var(--lila-hondo); outline-offset: 3px; }
+  .boton svg { width: 1em; height: 1em; flex: none; }
+
+  /* ~8 s sin noticias: botón discreto abajo */
+  .espera .respaldo {
+    opacity: .94; visibility: visible; transform: translate(-50%, 0);
+    transition: opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1), visibility 0s,
+                background-color .6s ease, box-shadow .6s ease, padding .6s ease, bottom .6s ease;
+  }
+  /* ~20 s sin noticias: panel más visible */
+  .espera-larga .respaldo {
+    opacity: 1;
+    bottom: max(7vh, calc(var(--inf) + 22px));
+    padding: 20px 22px 22px;
+    border-radius: 22px;
+    background: rgba(255,255,255,.88);
+    box-shadow: 0 1px 0 rgba(255,255,255,.9) inset, 0 18px 40px -18px rgba(60,48,84,.45), 0 0 0 1px rgba(183,160,211,.45);
+  }
+  .espera-larga .respaldo-texto { font-size: 1.1rem; color: var(--oliva-hondo); }
+  .espera-larga .boton {
+    min-height: 50px; padding: .7em 1.6em; font-size: 1.04rem;
+    border-color: transparent;
+    background: linear-gradient(180deg, #5A6534, var(--oliva-hondo));
+    color: #FBFAF0;
+    box-shadow: 0 8px 18px -8px rgba(70,80,42,.7);
+  }
+  .espera-larga .centro { transform: translateY(-10vh); }
+  .espera-larga .sello, .espera-larga .halo, .espera-larga .brillo::before { animation-play-state: paused; }
+
+  .sin-js { margin: 0 0 12px; font: italic 400 1.05rem/1.4 var(--serif); }
+
+  @keyframes aparecer { from { opacity: 0; transform: translateY(12px); } }
+  @keyframes latido {
+    0%, 100% { transform: scale(1); }
+    18%      { transform: scale(1.05); }
+    36%      { transform: scale(1); }
+    50%      { transform: scale(1.025); }
+    64%      { transform: scale(1); }
+  }
+  @keyframes halo {
+    0%   { opacity: 0;  transform: scale(.9); }
+    12%  { opacity: .6; }
+    70%  { opacity: 0;  transform: scale(1.6); }
+    100% { opacity: 0;  transform: scale(1.6); }
+  }
+  @keyframes destello { 0%, 55% { transform: translateX(-140%); } 100% { transform: translateX(140%); } }
+  @keyframes respirar { 0%, 100% { opacity: .7; } 50% { opacity: 1; } }
+  @keyframes respirar-sello { 0%, 100% { opacity: 1; } 50% { opacity: .82; } }
+
+  /* Movimiento reducido: el sello "respira" sin cambiar de tamaño */
+  @media (prefers-reduced-motion: reduce) {
+    .centro { animation: none; }
+    .sello { animation-name: respirar-sello; }
+    .halo, .brillo { display: none; }
+  }
+  /* Pantallas muy bajas (celular acostado) */
+  @media (max-height: 420px) {
+    .centro { gap: 8px; transform: translateY(-8vh); }
+    .sello { width: clamp(64px, 22vh, 110px); }
+    .respaldo { gap: 6px; }
+    .espera-larga .centro { transform: translateY(-20vh); }
+    .espera-larga .respaldo { padding: 12px 18px 14px; }
+    .espera-larga .boton { min-height: 44px; padding: .55em 1.5em; }
+  }
+</style>
+<noscript><style>.estado, .respaldo { display: none; } .sello, .halo, .brillo::before { animation: none; }</style></noscript>
+</head>
+<body>
+
+<iframe id="app" class="app" title="Invitación de boda de Edison y Milena"
+        allow="autoplay; fullscreen; web-share; clipboard-write"></iframe>
+
+<div id="carga" class="carga" aria-busy="true">
+  <div class="centro">
+    <h1 class="nombres">Edison <span class="y">&amp;</span> Milena</h1>
+    <div class="sello">
+      <span class="halo" aria-hidden="true"></span>
+      <svg viewBox="0 0 120 120" class="sello-svg" aria-hidden="true" focusable="false"><defs><radialGradient id="se-c" cx="36%" cy="30%" r="80%"><stop offset="0" stop-color="#9DA963"/><stop offset=".42" stop-color="#7A8445"/><stop offset=".8" stop-color="#56622E"/><stop offset="1" stop-color="#46502A"/></radialGradient><radialGradient id="se-h" cx="64%" cy="70%" r="80%"><stop offset="0" stop-color="#848F4A"/><stop offset=".6" stop-color="#65713A"/><stop offset="1" stop-color="#4A5428"/></radialGradient><linearGradient id="se-l" x1="0" y1="0" x2=".3" y2="1"><stop offset="0" stop-color="#F5F7E6"/><stop offset="1" stop-color="#CBD29C"/></linearGradient><path id="se-m" d="M32.1 67.5Q31.2 67.5 30.2 67.4Q29.2 67.2 28.4 66.8Q27.5 66.4 27 65.7Q26.4 65 26.4 63.9Q26.4 62.9 26.8 62Q27.2 61.2 27.8 60.4Q27.6 60.4 27.3 60.5Q27.1 60.5 26.8 60.5Q26.6 60.5 26.5 60.4Q26.3 60.3 26.3 60Q26.3 59.4 26.8 59.1Q27.3 58.9 27.9 58.8Q28.5 58.8 28.9 58.7Q30.3 57.2 32 56Q33.8 54.8 35.8 53.9Q37.8 53 39.8 52.5Q41.9 51.9 43.9 51.9Q44.5 51.9 45.1 52Q45.8 52.1 46.4 52.3Q46.9 52.5 47.3 53Q47.7 53.4 47.7 54.1Q47.7 54.9 47.2 55.7Q46.7 56.5 46 57.1Q45.2 57.8 44.4 58.1Q44.1 58.2 43.7 58.2Q43.5 58.2 43.3 58.1Q43.1 58.1 43.1 57.9Q43.1 57.7 43.3 57.6Q43.6 57.4 44.2 57Q44.8 56.7 45.4 56.2Q46.1 55.8 46.5 55.2Q47 54.7 47 54.1Q47 53.7 46.6 53.5Q46.3 53.2 45.8 53.1Q45.3 53 44.7 53Q44.2 53 44 53Q42.3 53 40.6 53.4Q38.9 53.9 37.2 54.6Q35.5 55.4 34 56.4Q32.5 57.5 31.3 58.6Q32 58.5 32.6 58.5Q33.2 58.5 33.7 58.5L35.7 58.5Q36.9 58.5 38.1 58.6Q39.3 58.6 40.1 58.7Q41 58.8 41.2 58.9Q41.5 59 41.5 59.1Q41.5 59.4 40.6 59.4Q40.1 59.3 39.2 59.3Q38.4 59.3 37.6 59.3L35.8 59.3Q34.6 59.3 33.9 59.3Q33.1 59.4 32.3 59.4Q31.5 59.5 30.4 59.6Q29.4 60.8 28.9 61.9Q28.4 62.9 28.4 63.7Q28.4 65 29.5 65.8Q30.7 66.5 32.8 66.5Q35 66.5 36.7 66.1Q38.5 65.7 39.9 65.1Q41.2 64.5 42.1 63.9Q43.1 63.3 43.6 62.9Q44.1 62.4 44.2 62.4Q44.5 62.4 44.5 62.6Q44.5 62.7 44.4 62.8Q44.2 63.2 43.4 63.8Q42.6 64.3 41.4 65Q40.2 65.6 38.7 66.2Q37.2 66.8 35.5 67.2Q33.8 67.5 32.1 67.5ZM48.1 65.4Q47.3 65.4 46.7 65.3Q46.1 65.2 45.6 64.9Q44.9 64.7 44.6 64.3Q44.3 63.9 44.3 63.3Q44.3 61.8 46.3 60.6Q47.4 60 49.9 59.2Q48.7 59.2 48.1 58.9Q47.5 58.6 47.5 58.1Q47.5 57.5 48 57Q48.6 56.5 49.5 56.2Q50.5 55.9 51.5 55.7Q51.8 55.7 52.4 55.6Q53 55.5 53.8 55.5Q54.4 55.5 55.1 55.6Q55.7 55.7 56.2 56Q56.6 56.3 56.6 56.8Q56.6 57 56.6 57.1Q56.6 57.2 56.5 57.3Q56.4 57.5 56.2 57.6Q56.1 57.7 55.9 57.7Q55.7 57.7 55.7 57.6Q55.7 57.5 55.8 57.4Q55.8 57.3 55.9 57.2Q55.9 57.1 56 57Q56 56.9 56 56.8Q56 56.3 55.4 56.1Q54.7 56 53.9 56Q53.2 56 52.5 56.1Q51.8 56.1 51.5 56.2Q50.9 56.4 50.2 56.7Q49.6 56.9 49.2 57.3Q48.8 57.7 48.8 58.3Q48.8 58.9 50.2 58.9Q50.6 58.9 51.4 58.8Q51.8 58.7 52 58.7Q52.1 58.6 52.3 58.6Q52.6 58.6 52.6 58.8Q52.6 58.9 52.1 59L50.7 59.4Q49.2 59.7 48.1 60.4Q47 61.2 46.4 62Q45.7 62.8 45.7 63.6Q45.7 64.2 46.3 64.6Q46.9 65 48.3 65Q50.5 65 52.7 64.2Q55.2 63.1 55.2 61.5Q55.2 61.2 55.1 60.7Q54.6 60.8 54.1 60.9Q53.6 61 53 61.1Q51.8 61.3 51 61.7Q50.1 62.2 50.1 63Q50.1 63.1 50 63.1Q49.9 63.1 49.9 62.9Q49.9 62.2 50 61.6Q50.1 61.1 50.8 60.8Q51.4 60.5 53.7 60.3Q54.8 60.1 55.7 60Q56.5 59.8 56.8 59.6Q57.1 59.4 57.1 59.3Q57.1 59.1 56.9 59Q56.6 58.9 56.6 58.9Q56.6 58.8 56.7 58.8Q57 58.8 57.2 59Q57.4 59.3 57.4 59.5Q57.4 60.2 55.5 60.7Q55.7 61.2 55.7 61.8Q55.7 63.5 52.9 64.6Q50.6 65.4 48.1 65.4ZM88.2 68.1Q87.3 68.1 86.7 67.8Q86.2 67.4 86.2 66.5Q86.2 65.3 87 63.4Q87.3 62.8 87.6 62Q88 61.2 88.7 59.9Q89 59.5 89.3 58.9Q89.6 58.3 89.9 57.8Q90 57.4 90.1 57.2Q90.2 56.9 90.2 56.7Q90.2 56.4 89.9 56.4Q89.1 56.4 87.8 57.3Q86.4 58.2 84.3 60.1Q82.8 61.4 81.7 62.6Q80.5 63.9 79.5 65.1L78.4 66.4Q78.3 66.5 78.2 66.7Q78.1 66.8 77.9 67Q77.7 67.1 77.5 67.1Q77 67.1 76.6 67Q76.2 66.8 76.2 66.5Q76.2 66.4 76.3 66.3Q76.4 66.2 76.7 65.7Q77 65.3 77.5 64.3Q79.1 61.6 79.8 59.8Q80.6 58 80.7 56.8Q80.8 56.7 80.8 56.6Q80.8 56.5 80.8 56.4Q80.8 55.9 80.6 55.6Q80.5 55.4 80.1 55.4Q79.4 55.5 78.4 56.1Q77.3 56.7 75.8 58.1Q74 59.6 72.4 61.5Q70.7 63.3 69.2 65.4L68.5 66.4Q67.9 67.1 67.7 67.2Q67.6 67.3 67.4 67.3Q67.1 67.3 66.8 67.1Q66.5 66.9 66.5 66.6Q66.5 66.4 66.6 66.3Q67.5 65.4 68.5 64Q69.4 62.6 70.4 60.8Q72.6 56.7 72.6 54.8Q72.6 53.5 71.9 52.9Q71.1 52.3 69.4 52.3Q68.5 52.3 67.4 52.5Q66.4 52.6 65.1 53Q64.2 53.3 63.4 53.6Q62.6 53.9 61.5 54.3Q59.7 55.2 58.1 56.2Q55.7 57.7 55.7 58.7Q55.7 60.1 59.2 60.1Q60.2 60.1 61.2 60Q62.2 59.9 63.2 59.8L63.3 59.8Q63.4 59.8 63.4 60Q63.4 60.2 63.2 60.2Q62.6 60.4 61.6 60.6Q60.6 60.7 59.3 60.7Q57.4 60.7 56.1 60.3Q54.3 59.7 54.3 58.4Q54.3 57.1 56.7 55.5Q57.5 55 58.5 54.5Q59.5 54 60.7 53.6Q61.6 53.2 62.6 52.9Q63.5 52.6 64.6 52.4Q66.1 52 67.4 51.8Q68.8 51.7 69.9 51.7Q74.5 51.7 74.5 54.6Q74.5 56.9 72.3 60.5Q73.2 59.6 74.1 58.7Q75 57.8 75.9 57Q77.2 55.7 78.3 55.1Q79.4 54.5 80.1 54.5Q81.1 54.5 81.7 55.2Q82.2 55.8 82.2 57Q82.2 58 81.7 59.5Q81.1 61 80.2 62.9Q81.4 61.8 82.4 60.8Q83.5 59.8 84.7 58.8Q88.2 56.1 89.7 55.7Q89.9 55.7 90.2 55.6Q90.6 55.6 90.7 55.6Q91.7 55.6 91.7 56.6Q91.7 57.5 91.1 58.7Q90.5 59.8 90 60.8Q89.5 61.7 89.1 62.7Q88.4 64 88.1 65Q87.8 66 87.8 66.6Q87.8 67.5 88.6 67.5Q89.1 67.5 89.9 67.1Q90.6 66.7 90.7 66.7Q90.9 66.7 90.9 66.8Q90.9 67.1 90.5 67.3Q90.2 67.5 89.7 67.8Q88.8 68.1 88.2 68.1Z"/><g id="se-r"><path d="M46 82.5Q60 78.6 74 82.5" fill="none" stroke="currentColor" stroke-width=".9" stroke-linecap="round"/><path transform="translate(49.5 81.6) rotate(-160)" d="M0 0C1.9 -1.5 4.6 -1.2 6.4 0C4.6 1.2 1.9 1.5 0 0Z"/><path transform="translate(53.5 80.6) rotate(150)" d="M0 0C1.9 -1.5 4.6 -1.2 6.4 0C4.6 1.2 1.9 1.5 0 0Z"/><path transform="translate(57 80) rotate(-165)" d="M0 0C1.7 -1.3 4.1 -1.1 5.8 0C4.1 1.1 1.7 1.3 0 0Z"/><path transform="translate(63 80) rotate(-15)" d="M0 0C1.7 -1.3 4.1 -1.1 5.8 0C4.1 1.1 1.7 1.3 0 0Z"/><path transform="translate(66.5 80.6) rotate(30)" d="M0 0C1.9 -1.5 4.6 -1.2 6.4 0C4.6 1.2 1.9 1.5 0 0Z"/><path transform="translate(70.5 81.6) rotate(-20)" d="M0 0C1.9 -1.5 4.6 -1.2 6.4 0C4.6 1.2 1.9 1.5 0 0Z"/><circle cx="60" cy="79.4" r="1.7"/></g></defs><path d="M109.6 56.1Q109.4 60 111.1 64.2Q112.8 68.4 112.8 72.8Q112.8 77.2 111.7 81.5Q110.6 85.8 108 89.4Q105.3 92.9 101.3 95.1Q97.3 97.3 94.3 100.1Q91.2 103 86.9 103.7Q82.7 104.5 79 106Q75.4 107.5 71.8 109.6Q68.2 111.8 64.1 111.5Q60 111.2 56.1 110.3Q52.2 109.4 48.1 109.1Q44.1 108.9 40.5 107.1Q36.9 105.3 32.3 104.9Q27.8 104.4 24.6 101.5Q21.5 98.5 18.8 95.2Q16.1 91.9 15.4 87.5Q14.8 83.1 13.9 79.2Q13 75.3 11.8 71.6Q10.5 67.8 10.1 63.9Q9.8 60 9.8 56Q9.9 52.1 9.8 47.8Q9.6 43.6 11.1 39.8Q12.7 35.9 14.6 32.1Q16.4 28.3 18.9 24.8Q21.3 21.3 24.8 18.9Q28.4 16.4 32.4 15.1Q36.4 13.7 40.3 12.5Q44.1 11.2 48 9.8Q51.8 8.5 55.9 8.8Q60 9.1 63.9 10.2Q67.7 11.3 71.9 11Q76 10.8 80.2 11.5Q84.3 12.3 87.6 14.9Q90.8 17.6 93.4 20.8Q95.9 24.1 98.2 27.3Q100.6 30.5 103.3 33.5Q106 36.6 107.1 40.5Q108.2 44.4 109 48.2Q109.8 52.1 109.6 56.1Z" fill="url(#se-c)"/><circle cx="60" cy="60" r="38.5" fill="url(#se-h)"/><path d="M27.4 78.8A37.6 37.6 0 0 1 81.6 29.2" fill="none" stroke="#1F2610" stroke-opacity=".16" stroke-width="7" stroke-linecap="round"/><path d="M24.1 73.1A38.2 38.2 0 0 1 76.1 25.4" fill="none" stroke="#1F2610" stroke-opacity=".5" stroke-width="2.4" stroke-linecap="round"/><path d="M95 43.7A38.6 38.6 0 0 1 43.7 95" fill="none" stroke="#E2E7BD" stroke-opacity=".55" stroke-width="1.6" stroke-linecap="round"/><path d="M28.4 86.5A41.2 41.2 0 0 1 80.6 24.3" fill="none" stroke="#E8ECC6" stroke-opacity=".35" stroke-width="1.2" stroke-linecap="round"/><circle cx="60.5" cy="60.6" r="34.6" fill="none" stroke="#232A10" stroke-opacity=".5" stroke-width="2.1" stroke-linecap="round" stroke-dasharray="0 5.435"/><circle cx="60" cy="60" r="34.6" fill="none" stroke="#E4E8C4" stroke-opacity=".82" stroke-width="1.9" stroke-linecap="round" stroke-dasharray="0 5.435"/><use href="#se-r" transform="translate(.5 .6)" fill="#232A10" color="#232A10" opacity=".5"/><use href="#se-r" fill="#DCE1B4" color="#DCE1B4" opacity=".85"/><use href="#se-m" transform="translate(1.1 1.3)" fill="#20270E" fill-opacity=".55"/><use href="#se-m" transform="translate(-.7 -.8)" fill="#FBFCEF" fill-opacity=".45"/><use href="#se-m" fill="url(#se-l)"/><ellipse cx="34" cy="27" rx="15" ry="6.5" transform="rotate(-38 34 27)" fill="#fff" fill-opacity=".22"/><ellipse cx="28.5" cy="33.5" rx="3.6" ry="1.5" transform="rotate(-48 28.5 33.5)" fill="#fff" fill-opacity=".55"/></svg>
+      <span class="brillo" aria-hidden="true"></span>
+    </div>
+    <p id="estado" class="estado" role="status" aria-live="polite">Preparando tu invitación…</p>
+    <noscript>
+      <p class="sin-js">Si la invitación no aparece, tócala aquí</p>
+      <a class="boton" href="https://script.google.com/macros/s/AKfycbyC4fhyoRdSALoxTeqOUT5TOk5ZFiPUvN32ib9X8o9ONKO-R-j7S-sxaOxkiMb210qxhg/exec" target="_top">Abrir la invitación</a>
+    </noscript>
+  </div>
+
+  <div class="respaldo">
+    <p class="respaldo-texto">Si la invitación no aparece, tócala aquí</p>
+    <a id="abrir" class="boton" target="_top">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 7.5 12 13l9-5.5M4.5 5h15A1.5 1.5 0 0 1 21 6.5v11a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 17.5v-11A1.5 1.5 0 0 1 4.5 5Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+      Abrir la invitación
+    </a>
+  </div>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  // Dirección de la invitación (web app de Apps Script, termina en /exec).
+  // Si algún día cambia, cámbiala aquí y también en el <noscript> de arriba.
+  var URL_APP = 'https://script.google.com/macros/s/AKfycbyC4fhyoRdSALoxTeqOUT5TOk5ZFiPUvN32ib9X8o9ONKO-R-j7S-sxaOxkiMb210qxhg/exec';
+
+  var BOTON_MS = 8000;   // sin 'lista' a los ~8 s: botón discreto abajo
+  var PANEL_MS = 20000;  // sin nada a los ~20 s: panel de respaldo más visible
+
+  var raiz = document.documentElement;
+  var marco = document.getElementById('app');
+  var carga = document.getElementById('carga');
+  var abrir = document.getElementById('abrir');
+  var estado = document.getElementById('estado');
+
+  // Solo para pruebas: ?app=<url> carga otra dirección (localhost o script.google.com).
+  var urlApp = URL_APP;
+  var modoPrueba = false;
+  try {
+    var param = new URLSearchParams(location.search).get('app');
+    if (param) {
+      var u = new URL(param, location.href);
+      var esLocal = u.protocol === 'http:' && /^(localhost|127\.0\.0\.1|\[::1\])$/.test(u.hostname);
+      var esGoogle = u.protocol === 'https:' && u.hostname === 'script.google.com';
+      if (esLocal || esGoogle) { urlApp = u.href; modoPrueba = esLocal; }
+      else if (window.console) console.warn('?app= ignorado: solo se aceptan localhost o script.google.com');
+    }
+  } catch (e) { /* navegador antiguo: se usa URL_APP */ }
+
+  abrir.href = urlApp;
+  marco.src = urlApp;
+
+  function origenValido(o) {
+    if (o === 'https://script.google.com') return true;
+    if (/^https:\/\/([a-z0-9-]+\.)+googleusercontent\.com$/i.test(o)) return true;
+    return modoPrueba && /^http:\/\/(localhost|127\.0\.0\.1|\[::1\])(:\d+)?$/.test(o);
+  }
+
+  var lista = false;
+  var t1 = null, t2 = null, visibleMs = 0, desde = null;
+
+  function mostrarApp() {
+    if (lista) return;
+    lista = true;
+    clearTimeout(t1); clearTimeout(t2);
+    raiz.classList.add('lista');
+    carga.setAttribute('aria-busy', 'false');
+    carga.setAttribute('aria-hidden', 'true');
+    // Tras el fundido se saca del todo para no estorbar al tacto ni al lector de pantalla
+    setTimeout(function () { carga.hidden = true; }, 900);
+  }
+
+  function etapaBoton() {
+    if (lista) return;
+    raiz.classList.add('espera');
+  }
+
+  function etapaPanel() {
+    if (lista) return;
+    etapaBoton();
+    raiz.classList.add('espera-larga');
+    estado.textContent = 'Está tardando un poco más…';
+    carga.setAttribute('aria-busy', 'false');
+  }
+
+  // Los tiempos cuentan solo con la pestaña a la vista (en segundo plano todo va más lento).
+  function programar() {
+    if (lista || desde !== null) return;
+    desde = Date.now();
+    if (visibleMs < BOTON_MS) t1 = setTimeout(etapaBoton, BOTON_MS - visibleMs);
+    if (visibleMs < PANEL_MS) t2 = setTimeout(etapaPanel, PANEL_MS - visibleMs);
+  }
+  function pausar() {
+    if (desde !== null) { visibleMs += Date.now() - desde; desde = null; }
+    clearTimeout(t1); clearTimeout(t2);
+  }
+  document.addEventListener('visibilitychange', function () {
+    if (document.visibilityState === 'hidden') pausar(); else programar();
+  });
+  if (document.visibilityState !== 'hidden') programar();
+
+  window.addEventListener('message', function (ev) {
+    if (!origenValido(ev.origin)) return;
+    var d = ev.data;
+    if (typeof d === 'string' && d.charAt(0) === '{') { try { d = JSON.parse(d); } catch (e) { return; } }
+    if (!d || typeof d !== 'object' || d.tipo !== 'boda-edison-milena') return;
+    // 'lista': la app arrancó. 'abierta' (se rompió el sello) implica lo mismo.
+    if (d.evento === 'lista' || d.evento === 'abierta') mostrarApp();
+  });
+})();
+</script>
+</body>
+</html>
