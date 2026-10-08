@@ -287,17 +287,18 @@
   var abrir = document.getElementById('abrir');
   var estado = document.getElementById('estado');
 
-  // Solo para pruebas: ?app=<url> carga otra dirección (localhost o script.google.com).
+  // Solo para pruebas en el PC: ?app=<url> carga la app local. Se acepta ÚNICAMENTE cuando
+  // esta página también se abre desde localhost y la URL apunta a localhost. Publicada en
+  // GitHub, ?app= se ignora siempre: así nadie puede mostrar otra app bajo la dirección de la boda.
   var urlApp = URL_APP;
   var modoPrueba = false;
   try {
     var param = new URLSearchParams(location.search).get('app');
-    if (param) {
+    var LOCAL = /^(localhost|127\.0\.0\.1|\[::1\])$/;
+    if (param && LOCAL.test(location.hostname)) {
       var u = new URL(param, location.href);
-      var esLocal = u.protocol === 'http:' && /^(localhost|127\.0\.0\.1|\[::1\])$/.test(u.hostname);
-      var esGoogle = u.protocol === 'https:' && u.hostname === 'script.google.com';
-      if (esLocal || esGoogle) { urlApp = u.href; modoPrueba = esLocal; }
-      else if (window.console) console.warn('?app= ignorado: solo se aceptan localhost o script.google.com');
+      if (u.protocol === 'http:' && LOCAL.test(u.hostname)) { urlApp = u.href; modoPrueba = true; }
+      else if (window.console) console.warn('?app= ignorado: solo se acepta una app en localhost');
     }
   } catch (e) { /* navegador antiguo: se usa URL_APP */ }
 

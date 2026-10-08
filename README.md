@@ -24,7 +24,7 @@ con una pantalla de carga mientras abre, y pone la foto y el texto que aparecen 
   La dirección `/exec` no cambia, así que aquí no hay que tocar nada.
 - **Si cambia la dirección `/exec`** (por ejemplo, si se crea una implementación nueva): en `index.html`
   cambia la constante `URL_APP` y también el enlace dentro de `<noscript>`.
-- **Otra imagen para WhatsApp**: reemplaza `vista-previa.jpg` por otra de 1200 × 630 y menos de 300 KB, con el mismo nombre.
+- **Otra imagen para WhatsApp**: reemplaza `vista-previa.jpg` por otra de 1200 × 630 y menos de 200 KB, con el mismo nombre.
 - **Tu usuario de GitHub**: en `index.html`, cambia `TU-USUARIO` en las tres líneas que están debajo del comentario
   `<!-- Cambia TU-USUARIO por tu usuario de GitHub -->`.
 - Para probar en el computador: `python -m http.server 8790` dentro de esta carpeta y abrir `http://localhost:8790/`.
